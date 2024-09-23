@@ -1,7 +1,7 @@
 import { Order } from "./order";
 
-export class MinHeap {
-    private heap: Order[];
+class MaxHeap {
+    public heap: Order[];
     private n: number; 
 
     constructor(size: number) {
@@ -9,13 +9,12 @@ export class MinHeap {
         this.n = 0;
     }
 
-    public checkMin(): Order {
+    public checkMax(): Order {
         return this.heap[1];
     }
 
     public isEmpty(): boolean {
         return this.n == 0;
-        
     }
 
     public getQuantity(): number {
@@ -32,7 +31,7 @@ export class MinHeap {
 
     private swap(i: number): void {
         let father: number = Math.floor(i / 2);
-        while (i > 1 && this.heap[father].getPrice()  >this.heap[i].getPrice()) {
+        while (i > 1 && this.heap[father].getPrice() < this.heap[i].getPrice()) {
             let temp: Order = this.heap[father];
             this.heap[father] = this.heap[i];
             this.heap[i] = temp;
@@ -41,7 +40,6 @@ export class MinHeap {
         }
     }
 
-
     private resize(newSize: number): void {
         let newHeap: Order[] = new Array(newSize);
         for (let i = 1; i < this.heap.length; i++)
@@ -49,44 +47,26 @@ export class MinHeap {
         this.heap = newHeap;
     }
 
-
-
-    //----------------------------------- ANALIZAR ESTE PARA CUANDO SE EMPAREJEN, Y SE DEBA ELIMINAR, NO NECESARIAMENTE EL ÚLTIMO, 
-    //SOLO SE CAMBIA POR EL ÚLTIMO, EL QUE SE DESA CAMBIAR, PARA REORGANIZARLOS
-
-    //public doNext(): string {
-        //let max: Order = this.heap[1];
-        
-        //this.heap[1] = this.heap[this.n];
-        //this.heap[this.n] = new Task("Completada",0);
-        //this.n--;
-        
-        //this.sink(1); 
-        //return "Realizando " + max.show();
-    //}
-    // ----------------------------------------
-    public showAll():void{
-        console.log("\nACCIONES DISPONIBLES: ")
-        for (let i = 1; i < this.n + 1; i++) {
-            console.log(this.heap[i].show());
-        }
+    public CheckMax(): Order {
+        return this.heap[1];
 
     }
 
-
-    // Función para volver a ordenarla ---------------------------
     private sink(i: number): void {
         while (2*i <= this.n) {
-            let j: number = 2*i; 
-            if (j < this.n && this.heap[j].getPrice() > this.heap[j+1].getPrice())
-                j++; 
-            if (this.heap[i].getPrice() <= this.heap[j].getPrice())
+            let j: number = 2*i; // empezamos asumiendo que el hijo izquierdo es el mayor
+            if (j < this.n && this.heap[j].getPrice() < this.heap[j+1].getPrice())
+                j++; // cambia a hijo derecho si este es el mayor
+            if (this.heap[i] >= this.heap[j])
                 break;
+            // Hacemos intercambio burbuja entre los nodos para que el mayor quede en la raíz
             let temp: Order = this.heap[i];
             this.heap[i] = this.heap[j];
             this.heap[j] = temp;
-            
+            // verificamos si procede otro intercambio hacia abajo
             i = j;
         }
     }
 }
+
+

@@ -1,9 +1,9 @@
 export class Order{
-    private company: string;
+    private company: string | null;
     private price: number;
     private quantity: number;
 
-    constructor(company: string, price: number, quantity: number) {
+    constructor(company: string | null, price: number, quantity: number) {
         this.company = company
         this.price = price
         this.quantity = quantity
