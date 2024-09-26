@@ -1,6 +1,6 @@
 import { Order } from "./order";
 
-class MaxHeap {
+export class MaxHeap {
     public heap: Order[];
     private n: number; 
 
@@ -26,6 +26,8 @@ class MaxHeap {
             this.resize(2 * this.heap.length)
         this.n++;
         this.heap[this.n] = value;
+
+        this.sink(1);
         this.swap(this.n);
     }
 
@@ -47,9 +49,15 @@ class MaxHeap {
         this.heap = newHeap;
     }
 
-    public CheckMax(): Order {
-        return this.heap[1];
-
+    public getMax(): string {
+        let max: Order = this.heap[1];
+        
+        this.heap[1] = this.heap[this.n];
+        this.heap[this.n] = new Order("" ,0,0);
+        this.n--;
+        
+        this.sink(1); 
+        return  max.show();
     }
 
     private sink(i: number): void {
