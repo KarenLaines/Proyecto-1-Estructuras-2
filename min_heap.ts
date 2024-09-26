@@ -49,22 +49,17 @@ export class MinHeap {
         this.heap = newHeap;
     }
 
-
-
-    //----------------------------------- ANALIZAR ESTE PARA CUANDO SE EMPAREJEN, Y SE DEBA ELIMINAR, NO NECESARIAMENTE EL ÚLTIMO, 
-    //SOLO SE CAMBIA POR EL ÚLTIMO, EL QUE SE DESA CAMBIAR, PARA REORGANIZARLOS
-
-    //public doNext(): string {
-        //let max: Order = this.heap[1];
+    public getMin(): string {
+        let max: Order = this.heap[1];
         
-        //this.heap[1] = this.heap[this.n];
-        //this.heap[this.n] = new Task("Completada",0);
-        //this.n--;
+        this.heap[1] = this.heap[this.n];
+        this.heap[this.n] = new Order("" ,0,0);
+        this.n--;
         
-        //this.sink(1); 
-        //return "Realizando " + max.show();
-    //}
-    // ----------------------------------------
+        this.sink(1); 
+        return  max.show();
+    }
+
     public showAll():void{
         console.log("\nACCIONES DISPONIBLES: ")
         for (let i = 1; i < this.n + 1; i++) {
@@ -74,7 +69,7 @@ export class MinHeap {
     }
 
 
-    // Función para volver a ordenarla ---------------------------
+    // Función para volver a ordenarla 
     private sink(i: number): void {
         while (2*i <= this.n) {
             let j: number = 2*i; 
